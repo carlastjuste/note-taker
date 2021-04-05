@@ -1,29 +1,23 @@
-var express = require('express');
-var app = express();
-var PORT = process.env.PORT || 8080;
+const express = require("express");
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'));
-
-
-var fs = require('fs');
-var db = fs.readFileSync('./db/db.json');
-var notes = JSON.parse(db);
-console.log(notes);
+app.use(express.static("./public"));
 
 
 // ================================================================================
 // ROUTER
-// The below points our server to a series of "route" files.
-// These routes give our server a "map" of how to respond when users visit or request data from various URLs.
 // ================================================================================
-require("./routes/htmlRoutes")(app)
-
-app.get('/', (req, res) => res.render("index"));
-
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
 
 
+
+//Listener
 app.listen(PORT, listening);
 
 function listening() {
