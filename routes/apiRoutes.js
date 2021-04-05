@@ -6,6 +6,8 @@
 
 var fs = require('fs');
 var notes = require('../db/db.json');
+var uniqid = require('uniqid');
+
 
 // var data = fs.readFileSync('db.json');
 // var db = JSON.parse(data);
@@ -22,33 +24,15 @@ module.exports = function(app) {
 
  
 // API POST Requests
-    app.post("/api/notes", function(req, res) {    
-      notes.push(req.body);
+    app.post("/api/notes", function(req, res) { 
+     var newNote = req.body;
+      newNote.id = uniqid();  
+      notes.push(newNote);
       res.json(true);
       fs.writeFile('./db/db.json', JSON.stringify(notes), function(err) {
               if (err) return console.log(err);
-                 return true});
-      
+                 return true});  
     })
-
-
-
-
-
-
-
-
-// app.post("/api/notes", addNotes);
-
-//  function addNotes (req, res) {
-//       var data = req.body;
-//       console.log(data);
-//       notes.push(data);
-//       fs.writeFile('./db/db.json', JSON.stringify(notes), function(err) {
-//           if (err) return console.log(err);
-//             return true});
-//   }
- 
 
 };
 
