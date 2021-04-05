@@ -34,5 +34,24 @@ module.exports = function(app) {
                  return true});  
     })
 
+// API DELETE Requests 
+    app.delete("/api/notes/:id", function (req, res) {
+    var idNote = req.params.id;
+    for (var i = 0; i < notes.length; i++) {
+      if (idNote == notes[i].id) {
+        notes.splice(i, 1);
+      }
+    }
+    res.json(notes);
+    fs.writeFile('./db/db.json', JSON.stringify(notes), function(err) {
+        if (err) return console.log(err);
+           return true});  
+    
+
+  });
 };
+
+
+
+
 
