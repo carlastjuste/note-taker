@@ -3,6 +3,7 @@ var app = express();
 var PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
 
 var fs = require('fs');
@@ -16,9 +17,9 @@ console.log(notes);
 // The below points our server to a series of "route" files.
 // These routes give our server a "map" of how to respond when users visit or request data from various URLs.
 // ================================================================================
+require("./routes/htmlRoutes")(app)
 
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+app.get('/', (req, res) => res.render("index"));
 
 
 
