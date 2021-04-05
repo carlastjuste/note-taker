@@ -25,6 +25,10 @@ module.exports = function(app) {
     app.post("/api/notes", function(req, res) {    
       notes.push(req.body);
       res.json(true);
+      fs.writeFile('./db/db.json', JSON.stringify(notes), function(err) {
+              if (err) return console.log(err);
+                 return true});
+      
     })
 
 
